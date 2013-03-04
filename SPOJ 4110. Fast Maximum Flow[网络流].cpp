@@ -85,7 +85,7 @@ using namespace std;
 #define Rush for(int ____T=RD(); ____T--;)
 
 #define Display(A, n, m) {                      \
-  REP(i, n){		                            \
+	REP(i, n){		                            \
         REP(j, m) cout << A[i][j] << " ";       \
         cout << endl;				            \
 	}						                    \
@@ -418,7 +418,7 @@ LL last_ans; int Case; template<class T> inline void OT(const T &x){
 
 //}/* .................................................................................................................................. */
 
-const int N = 5009, M = 4 * 30009;
+const int N = 5009, M = 2 * 30009;
 
 int D[N], hd[N], suc[M], to[M], cap[M];
 int n, m, s, t;
@@ -429,7 +429,8 @@ inline void add_edge(int x, int y, int c){
 }
 
 inline void add_edgee(int x, int y, int c){
-    add_edge(x, y, c), add_edge(y, x, c);
+    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
+    suc[m] = hd[y], to[m] = x, cap[m] = c, hd[y] = m++;
 }
 
 #define v to[i]
