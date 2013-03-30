@@ -1,0 +1,9 @@
+let read_int _ = Scanf.bscanf Scanf.Scanning.stdib " %d " (fun x -> x)
+let read_float _ = Scanf.bscanf Scanf.Scanning.stdib " %f " (fun x -> x)
+let() =
+  let f = function
+    | 3 -> 18
+    | _ -> 0
+
+
+(* List.map ( x-> x ) [0; 1; 0; 18; 0; 1800; 0; 670320; 0; 734832000; 0; 890786230; 0; 695720788; 0; 150347555; 0 ] in;*)

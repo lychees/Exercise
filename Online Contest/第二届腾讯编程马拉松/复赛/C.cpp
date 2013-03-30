@@ -13,6 +13,7 @@
 #include <cstring>
 #include <climits>
 #include <cassert>
+#include <complex>
 #include <cstdio>
 #include <string>
 #include <vector>
@@ -75,27 +76,29 @@ using namespace std;
 #define ERS(A, P) A.erase(A.begin() + P)
 #define BSC(A, x) (lower_bound(ALL(A), x) - A.begin())
 #define CTN(T, x) (T.find(x) != T.end())
-#define SZ(A) int(A.size())
+#define SZ(A) int((A).size())
 #define PB push_back
 #define MP(A, B) make_pair(A, B)
 #define PTT pair<T, T>
 #define fi first
 #define se second
+#define re real()
+#define im imag()
 
 #define Rush for(int ____T=RD(); ____T--;)
 
 #define Display(A, n, m) {                      \
-	REP(i, n){		                            \
+    REP(i, n){                                    \
         REP(j, m) cout << A[i][j] << " ";       \
-        cout << endl;				            \
-	}						                    \
+        cout << endl;                            \
+    }                                            \
 }
 
-#define Display_1(A, n, m) {				    \
-	REP_1(i, n){		                        \
+#define Display_1(A, n, m) {                    \
+    REP_1(i, n){                                \
         REP_1(j, m) cout << A[i][j] << " ";     \
-		cout << endl;		            		\
-	}						                    \
+        cout << endl;                            \
+    }                                            \
 }
 
 #pragma comment(linker, "/STACK:36777216")
@@ -142,8 +145,8 @@ typedef vector<VII> VVII;
 
 template<class T> inline T& RD(T &);
 template<class T> inline void OT(const T &);
-inline int RD(){int x; return RD(x);}
-//inline LL RD(){LL x; return RD(x);}
+//inline int RD(){int x; return RD(x);}
+inline LL RD(){LL x; return RD(x);}
 inline DB& RF(DB &);
 inline DB RF(){DB x; return RF(x);}
 inline char* RS(char *s);
@@ -237,8 +240,8 @@ const DB EPS = 1e-9;
 const DB OO = 1e20;
 const DB PI = acos(-1.0); //M_PI;
 
-const int dx[] = {-1, 0, 1, 0};
-const int dy[] = {0, 1, 0, -1};
+//const int dx[] = {-1, 0, 1, 0};
+//const int dy[] = {0, 1, 0, -1};
 
 //}
 
@@ -386,8 +389,8 @@ inline int phi(int n){
 /** I/O Accelerator Interface .. **/ //{
 template<class T> inline T& RD(T &x){
     //cin >> x;
-    scanf("%d", &x);
-    //char c; for (c = getchar(); c < '0'; c = getchar()); x = c - '0'; for (c = getchar(); '0' <= c && c <= '9'; c = getchar()) x = x * 10 + c - '0';
+    //scanf("%d", &x);
+    char c; for (c = getchar(); c < '0'; c = getchar()); x = c - '0'; for (c = getchar(); '0' <= c && c <= '9'; c = getchar()) x = x * 10 + c - '0';
     //char c; c = getchar(); x = c - '0'; for (c = getchar(); c >= '0'; c = getchar()) x = x * 10 + c - '0';
     return x;
 }
@@ -408,86 +411,68 @@ inline char* RS(char *s){
 }
 
 LL last_ans; int Case; template<class T> inline void OT(const T &x){
-    //printf("Case %d: %d\n", ++Case, x);
+    printf("Case %d: %d\n", ++Case, x);
     //printf("%lld ", x);
     //printf("%d\n", x);
-    cout << x << endl;
+    //cout << x << endl;
     //last_ans = x;
 }
 //}
 
 //}/* .................................................................................................................................. */
 
-const int N = 5009, M = 2 * 30009;
+struct Int{
+    int val;
 
-int D[N], hd[N], suc[M], to[M], cap[M];
-int n, m, s, t;
+    operator int() const{return val;}
 
-inline void add_edge(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = 0, hd[y] = m++;
-}
-
-inline void add_edgee(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = c, hd[y] = m++;
-}
-
-#define v to[i]
-#define c cap[i]
-#define f cap[i^1]
-
-bool bfs(){
-    static int Q[N]; int cz = 0, op = 1;
-    fill(D, D+n, 0), D[Q[0] = s] = 1; while (cz < op){
-        int u = Q[cz++]; REP_G(i, u) if (!D[v] && c){
-            D[Q[op++] = v] = D[u] + 1;
-            if (v == t) return 1;
-        }
+    Int(int val = 0):val(val){
+        val %= MOD; if (val < 0) val += MOD;
     }
-    return 0;
-}
-
-LL Dinitz(){
-
-    to[0] = s;
-    LL max_flow = 0;
-
-    while (bfs()){
-
-        static int sta[N], cur[N]; int top = 0;
-        sta[0] = 0, cur[s] = hd[s]; while (top != -1){
-
-            int u = to[sta[top]], i; if (u == t){
-                int d = INF; REP_1(ii, top) i = sta[ii], checkMin(d, c);                  max_flow += d;
-                DWN_1(ii, top, 1){i = sta[ii], f += d, c -= d; if (!c) top = ii - 1;}
-                u = to[sta[top]];
-            }
-
-            for (i=cur[u];i;i=suc[i])
-                if (D[u] + 1 == D[v] && c) break;
-
-            if (!i) D[u] = 0, --top;
-            else {
-                cur[u] = suc[i], cur[v] = hd[v];
-                sta[++top] = i;
-            }
-        }
+    inline Int& operator +=(const int& rhs){
+        INC(val, rhs);
+        return *this;
     }
-
-    return max_flow;
-}
-
-
-void init(){
-    RD(n), m = 2; //fill(hd, hd+n+1);
-
-    Rush{
-        int x, y; RD(x, y);
-        add_edgee(x, y, RD());
+    inline Int operator +(const int& rhs) const{
+        return sum(val, rhs);
     }
+    inline Int& operator -=(const int& rhs){
+        DEC(val, rhs);
+        return *this;
+    }
+    inline Int operator -(const int& rhs) const{
+        return dff(val, rhs);
+    }
+    inline Int& operator *=(const int& rhs){
+        MUL(val, rhs);
+        return *this;
+    }
+    inline Int operator *(const int& rhs) const{
+        return pdt(val, rhs);
+    }
+    inline Int& operator /=(const int& rhs){
+        DIV(val, rhs);
+        return *this;
+    }
+    inline Int operator /(const int& rhs) const{
+        return qtt(val, rhs);
+    }
+};
 
-    s = 1, t = n++;
+const int N = 450;
+
+Int f[2][N], Comb[N][N], Fact[N], pi, ss;
+int n; int p, q;
+
+void gao(int x){
+
+    swap(p, q); REP(i, N) f[p][i] = 0;
+
+	REP(i, ss) if (f[q][i]){
+		REP(j, x+1) REP(k, min(i,j)+1){
+            f[p][x+i-j-k] += f[q][i] * Comb[i][k] * Comb[ss-i][j-k] * Comb[x-1][j-1];
+		}
+    }
 }
 
 int main(){
@@ -497,6 +482,18 @@ int main(){
     //freopen("out.txt", "w", stdout);
 #endif
 
-    init(); OT(Dinitz());
-}
+    REP(i, N){Comb[i][0] = 1; REP_1(j, i) Comb[i][j] = Comb[i-1][j-1] + Comb[i-1][j];}
+    Fact[0] = 1; FOR(i, 1, N) Fact[i] = Fact[i-1] * i;
 
+    Rush{
+        pi = ss = 1, p = 0, q = 1;
+        REP(i, N) f[p][i] = 0; f[p][0] = 1;
+
+        REP_C(i, RD(n)){
+            int x; RD(x); gao(x);
+            pi *= Fact[x], ss += x;
+        }
+
+        OT(int(f[p][0] * pi));
+    }
+}

@@ -75,7 +75,7 @@ using namespace std;
 #define ERS(A, P) A.erase(A.begin() + P)
 #define BSC(A, x) (lower_bound(ALL(A), x) - A.begin())
 #define CTN(T, x) (T.find(x) != T.end())
-#define SZ(A) int(A.size())
+#define SZ(A) int((A).size())
 #define PB push_back
 #define MP(A, B) make_pair(A, B)
 #define PTT pair<T, T>
@@ -142,8 +142,8 @@ typedef vector<VII> VVII;
 
 template<class T> inline T& RD(T &);
 template<class T> inline void OT(const T &);
-inline int RD(){int x; return RD(x);}
-//inline LL RD(){LL x; return RD(x);}
+//inline int RD(){int x; return RD(x);}
+inline LL RD(){LL x; return RD(x);}
 inline DB& RF(DB &);
 inline DB RF(){DB x; return RF(x);}
 inline char* RS(char *s);
@@ -237,8 +237,8 @@ const DB EPS = 1e-9;
 const DB OO = 1e20;
 const DB PI = acos(-1.0); //M_PI;
 
-const int dx[] = {-1, 0, 1, 0};
-const int dy[] = {0, 1, 0, -1};
+const int dx[] = {-1, 1, 0, 0};
+const int dy[] = {0, 0, -1, 1};
 
 //}
 
@@ -315,79 +315,13 @@ inline int count_bits(int x){return __builtin_popcount(x);}
 inline int count_bits(LL x){return __builtin_popcountll(x);}
 
 } using namespace BO;//}
-// <<= '2. Number Theory .,//{
-namespace NT{
-inline LL __lcm(LL a, LL b){return a*b/__gcd(a,b);}
-inline void INC(int &a, int b){a += b; if (a >= MOD) a -= MOD;}
-inline int sum(int a, int b){a += b; if (a >= MOD) a -= MOD; return a;}
-inline void DEC(int &a, int b){a -= b; if (a < 0) a += MOD;}
-inline int dff(int a, int b){a -= b; if (a < 0) a  += MOD; return a;}
-inline void MUL(int &a, int b){a = (LL)a * b % MOD;}
-inline int pdt(int a, int b){return (LL)a * b % MOD;}
-
-inline int sum(int a, int b, int c){return sum(sum(a, b), c);}
-inline int sum(int a, int b, int c, int d){return sum(sum(a, b), sum(c, d));}
-inline int pdt(int a, int b, int c){return pdt(pdt(a, b), c);}
-inline int pdt(int a, int b, int c, int d){return pdt(pdt(pdt(a, b), c), d);}
-
-inline int pow(int a, int b){
-    int c(1); while (b){
-        if (b&1) MUL(c, a);
-        MUL(a, a), b >>= 1;
-    }
-    return c;
-}
-
-inline int pow(int a, LL b){
-    int c(1); while (b){
-        if (b&1) MUL(c, a);
-        MUL(a, a), b >>= 1;
-    }
-    return c;
-}
-
-template<class T> inline T pow(T a, LL b){
-    T c(1); while (b){
-        if (b&1) c *= a;
-        a *= a, b >>= 1;
-    }
-    return c;
-}
-
-inline int _I(int b){
-    int a = MOD, x1 = 0, x2 = 1, q;
-    while (true){
-        q = a / b, a %= b;
-        if (!a) return (x2 + MOD) % MOD;
-        DEC(x1, pdt(q, x2));
-
-        q = b / a, b %= a;
-        if (!b) return (x1 + MOD) % MOD;
-        DEC(x2, pdt(q, x1));
-    }
-}
-
-inline void DIV(int &a, int b){MUL(a, _I(b));}
-inline int qtt(int a, int b){return pdt(a, _I(b));}
-
-inline int phi(int n){
-    int res = n; for (int i=2;sqr(i)<=n;++i) if (!(n%i)){
-        DEC(res, qtt(res, i));
-        do{n /= i;} while(!(n%i));
-    }
-    if (n != 1)
-        DEC(res, qtt(res, n));
-    return res;
-}
-
-} using namespace NT;//}
 //}
 
 /** I/O Accelerator Interface .. **/ //{
 template<class T> inline T& RD(T &x){
     //cin >> x;
-    scanf("%d", &x);
-    //char c; for (c = getchar(); c < '0'; c = getchar()); x = c - '0'; for (c = getchar(); '0' <= c && c <= '9'; c = getchar()) x = x * 10 + c - '0';
+    //scanf("%d", &x);
+    char c; for (c = getchar(); c < '0'; c = getchar()); x = c - '0'; for (c = getchar(); '0' <= c && c <= '9'; c = getchar()) x = x * 10 + c - '0';
     //char c; c = getchar(); x = c - '0'; for (c = getchar(); c >= '0'; c = getchar()) x = x * 10 + c - '0';
     return x;
 }
@@ -408,87 +342,36 @@ inline char* RS(char *s){
 }
 
 LL last_ans; int Case; template<class T> inline void OT(const T &x){
-    //printf("Case %d: %d\n", ++Case, x);
-    //printf("%lld ", x);
+    //printf("Case #%d: %d\n", ++Case, x);
+    printf("%I64d\n", x);
     //printf("%d\n", x);
-    cout << x << endl;
+    //cout << x << endl;
     //last_ans = x;
 }
 //}
 
 //}/* .................................................................................................................................. */
+const int N = int(7e5) + 9;
 
-const int N = 5009, M = 2 * 30009;
-
-int D[N], hd[N], suc[M], to[M], cap[M];
-int n, m, s, t;
-
-inline void add_edge(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = 0, hd[y] = m++;
-}
-
-inline void add_edgee(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = c, hd[y] = m++;
-}
-
-#define v to[i]
-#define c cap[i]
-#define f cap[i^1]
-
-bool bfs(){
-    static int Q[N]; int cz = 0, op = 1;
-    fill(D, D+n, 0), D[Q[0] = s] = 1; while (cz < op){
-        int u = Q[cz++]; REP_G(i, u) if (!D[v] && c){
-            D[Q[op++] = v] = D[u] + 1;
-            if (v == t) return 1;
-        }
+struct rec{
+    int w,x,z,t;
+    bool operator <(const rec& r) const{
+        return x < r.x;
     }
-    return 0;
+};
+
+int n, nn; rec event[N];
+
+void Ins(int x,int y,int z){ // ¾ØÐÎÇÐ¸î¡£¡£¡£
+    event[nn].w = x, event[nn].x = min(y,z), event[nn++].t = 1;
+    event[nn].w = x, event[nn].x = max(y,z), event[nn].z = min(y,z), event[nn++].t = 2;
 }
 
-LL Dinitz(){
-
-    to[0] = s;
-    LL max_flow = 0;
-
-    while (bfs()){
-
-        static int sta[N], cur[N]; int top = 0;
-        sta[0] = 0, cur[s] = hd[s]; while (top != -1){
-
-            int u = to[sta[top]], i; if (u == t){
-                int d = INF; REP_1(ii, top) i = sta[ii], checkMin(d, c);                  max_flow += d;
-                DWN_1(ii, top, 1){i = sta[ii], f += d, c -= d; if (!c) top = ii - 1;}
-                u = to[sta[top]];
-            }
-
-            for (i=cur[u];i;i=suc[i])
-                if (D[u] + 1 == D[v] && c) break;
-
-            if (!i) D[u] = 0, --top;
-            else {
-                cur[u] = suc[i], cur[v] = hd[v];
-                sta[++top] = i;
-            }
-        }
-    }
-
-    return max_flow;
+void Ins(int x1,int x2,int y1,int y2){
+    Ins(1,x1,y1), Ins(1,x2,y2);
+    Ins(-1,x2,y1), Ins(-1,x1,y2);
 }
 
-
-void init(){
-    RD(n), m = 2; //fill(hd, hd+n+1);
-
-    Rush{
-        int x, y; RD(x, y);
-        add_edgee(x, y, RD());
-    }
-
-    s = 1, t = n++;
-}
 
 int main(){
 
@@ -497,6 +380,36 @@ int main(){
     //freopen("out.txt", "w", stdout);
 #endif
 
-    init(); OT(Dinitz());
-}
 
+    Rush{
+        LL S = 0, A = 0, B = 0; nn = 0;
+
+        REP_C(i, RD(n)){
+            int x1, x2, y1, y2;
+            RD(x1, y1, x2, y2);
+            Ins(x1, x2, y1, y2);
+        }
+
+        Rush{
+            RD(event[nn].x);
+            event[nn++].t = 0;
+        }
+
+        sort(event, event + nn);
+
+        REP(i, nn){ // É¨ÃèÏß¡£¡£¡£
+            if(event[i].t == 1){
+                B -= event[i].w;
+                A += (LL) event[i].w * event[i].x;
+            }
+            else if(event[i].t == 2){
+                S += (LL) event[i].w * event[i].x * event[i].z;
+                A -= (LL) event[i].w * event[i].z;
+            }
+            else{
+                LL ans = S + (LL) B * event[i].x * event[i].x + A * event[i].x;
+                OT(ans);
+            }
+        }
+    }
+}

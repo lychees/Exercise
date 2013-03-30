@@ -13,6 +13,7 @@
 #include <cstring>
 #include <climits>
 #include <cassert>
+#include <complex>
 #include <cstdio>
 #include <string>
 #include <vector>
@@ -75,12 +76,14 @@ using namespace std;
 #define ERS(A, P) A.erase(A.begin() + P)
 #define BSC(A, x) (lower_bound(ALL(A), x) - A.begin())
 #define CTN(T, x) (T.find(x) != T.end())
-#define SZ(A) int(A.size())
+#define SZ(A) int((A).size())
 #define PB push_back
 #define MP(A, B) make_pair(A, B)
 #define PTT pair<T, T>
 #define fi first
 #define se second
+#define re real()
+#define im imag()
 
 #define Rush for(int ____T=RD(); ____T--;)
 
@@ -142,8 +145,8 @@ typedef vector<VII> VVII;
 
 template<class T> inline T& RD(T &);
 template<class T> inline void OT(const T &);
-inline int RD(){int x; return RD(x);}
-//inline LL RD(){LL x; return RD(x);}
+//inline int RD(){int x; return RD(x);}
+inline LL RD(){LL x; return RD(x);}
 inline DB& RF(DB &);
 inline DB RF(){DB x; return RF(x);}
 inline char* RS(char *s);
@@ -229,7 +232,7 @@ template<class T, class C> inline T& SRT(T &A, C B){sort(ALL(A), B); return A;}
 
 /** Constant List .. **/ //{
 
-const int MOD = int(1e9) + 7;
+const int MOD = int(1e9) + 9;
 //int MOD = 99990001;
 const int INF = 0x3f3f3f3f;
 const LL INFF = 1LL << 60;
@@ -386,8 +389,8 @@ inline int phi(int n){
 /** I/O Accelerator Interface .. **/ //{
 template<class T> inline T& RD(T &x){
     //cin >> x;
-    scanf("%d", &x);
-    //char c; for (c = getchar(); c < '0'; c = getchar()); x = c - '0'; for (c = getchar(); '0' <= c && c <= '9'; c = getchar()) x = x * 10 + c - '0';
+    //scanf("%d", &x);
+    char c; for (c = getchar(); c < '0'; c = getchar()); x = c - '0'; for (c = getchar(); '0' <= c && c <= '9'; c = getchar()) x = x * 10 + c - '0';
     //char c; c = getchar(); x = c - '0'; for (c = getchar(); c >= '0'; c = getchar()) x = x * 10 + c - '0';
     return x;
 }
@@ -410,85 +413,102 @@ inline char* RS(char *s){
 LL last_ans; int Case; template<class T> inline void OT(const T &x){
     //printf("Case %d: %d\n", ++Case, x);
     //printf("%lld ", x);
-    //printf("%d\n", x);
-    cout << x << endl;
+    printf("%d\n", x);
+    //cout << x << endl;
     //last_ans = x;
 }
 //}
 
 //}/* .................................................................................................................................. */
 
-const int N = 5009, M = 2 * 30009;
+const int N = 20009, M = 256, L = 15;
 
-int D[N], hd[N], suc[M], to[M], cap[M];
-int n, m, s, t;
+int a[3*N], sa[3*N], rankk[N], height[N];
+int C[N], key[N], t1[N], t2[N]; char str[N];
+int n, _n;
 
-inline void add_edge(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = 0, hd[y] = m++;
+
+inline void rs(int *x, int *y, int *sa, int n, int m){
+    REP(i, n) key[i] = i[y][x];
+    memset(C, 0, sizeof(C[0]) * m);
+    REP(i, n) ++C[key[i]];
+    FOR(i, 1, m) C[i] += C[i-1];
+    DWN(i, n, 0) sa[--C[key[i]]] = y[i];
 }
 
-inline void add_edgee(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = c, hd[y] = m++;
+void da(int a[], int sa[], int n, int m){
+    int *x = t1, *y = t2;
+    memset(C, 0, sizeof(C[0]) * m);
+    REP(i, n) ++C[x[i] = a[i]];
+    FOR(i, 1, m) C[i] += C[i-1];
+    DWN(i, n, 0) sa[--C[x[i]]] = i;
+    for (int l = 1, p = 1; p < n; l <<= 1, m = p){
+        p = 0; FOR(i, n-l, n) y[p++] = i;
+        REP(i, n) if (sa[i] >= l) y[p++] = sa[i] - l;
+        rs(x, y, sa, n, m), swap(x, y), x[sa[0]] = 0, p = 0; FOR(i, 1, n)
+            x[sa[i]] = (y[sa[i]] == y[sa[i-1]] && y[sa[i]+l] == y[sa[i-1]+l]) ? p : ++p;
+        ++p;
+    }
 }
 
-#define v to[i]
-#define c cap[i]
-#define f cap[i^1]
+#define F(x) ((x)/3+((x)%3==1?0:tb))
+#define G(x) ((x)<tb?(x)*3+1:((x)-tb)*3+2)
+int c0(int *r,int a,int b)
+{return r[a]==r[b]&&r[a+1]==r[b+1]&&r[a+2]==r[b+2];}
+int c12(int k,int *r,int a,int b)
+{if(k==2) return r[a]<r[b]||r[a]==r[b]&&c12(1,r,a+1,b+1);
+ else return r[a]<r[b]||r[a]==r[b]&&key[a+1]<key[b+1];}
 
-bool bfs(){
-    static int Q[N]; int cz = 0, op = 1;
-    fill(D, D+n, 0), D[Q[0] = s] = 1; while (cz < op){
-        int u = Q[cz++]; REP_G(i, u) if (!D[v] && c){
-            D[Q[op++] = v] = D[u] + 1;
-            if (v == t) return 1;
+void dc3(int a[], int *sa, int n, int m){
+    int i, j, *an=a+n, *san=sa+n, ta=0, tb=(n+1)/3, tbc=0, p;
+    a[n] = a[n+1] = 0; REP(i, n) if (i%3) t1[tbc++]=i;
+
+    rs(a+2,t1,t2,tbc,m), rs(a+1,t2,t1,tbc,m), rs(a,t1,t2,tbc,m);
+    p = 0, an[F(t2[0])] = 0; FOR(i, 1, tbc)
+        an[F(t2[i])] = c0(a,t2[i-1],t2[i]) ? p : ++p;
+
+    if (++p < tbc) dc3(an,san,tbc,p);
+    else REP(i, tbc) san[an[i]] = i;
+
+    REP(i, tbc) if(san[i] < tb) t2[ta++] = san[i] * 3;
+    if (n%3==1) t2[ta++] = n-1; rs(a,t2,t1,ta,m);
+    REP(i, tbc) key[t2[i]=G(san[i])] = i;
+
+    for(i=0,j=0,p=0; i<ta && j<tbc; p++)
+        sa[p]=c12(t2[j]%3,a,t1[i],t2[j]) ? t1[i++] : t2[j++];
+    for(;i<ta;p++) sa[p]=t1[i++]; for(;j<tbc;p++) sa[p]=t2[j++];
+}
+
+inline bool f(int x){
+    int l = INF, r = -INF; REP_1(i, n){
+        if (height[i] >= x) checkMin(l, sa[i]), checkMax(r, sa[i]);
+        else {
+            if (r - l >= x) return true;
+            l = sa[i], r = sa[i];
         }
     }
-    return 0;
+    return false;
 }
 
-LL Dinitz(){
+int solve(){
 
-    to[0] = s;
-    LL max_flow = 0;
-
-    while (bfs()){
-
-        static int sta[N], cur[N]; int top = 0;
-        sta[0] = 0, cur[s] = hd[s]; while (top != -1){
-
-            int u = to[sta[top]], i; if (u == t){
-                int d = INF; REP_1(ii, top) i = sta[ii], checkMin(d, c);                  max_flow += d;
-                DWN_1(ii, top, 1){i = sta[ii], f += d, c -= d; if (!c) top = ii - 1;}
-                u = to[sta[top]];
-            }
-
-            for (i=cur[u];i;i=suc[i])
-                if (D[u] + 1 == D[v] && c) break;
-
-            if (!i) D[u] = 0, --top;
-            else {
-                cur[u] = suc[i], cur[v] = hd[v];
-                sta[++top] = i;
-            }
-        }
+    REP_1(i, n) rankk[sa[i]] = i;
+    int k = 0; for (int i = 0; i < n; height[rankk[i++]] = k){
+        if (k) --k; for (int j = sa[rankk[i]-1]; a[i+k] == a[j+k]; ++k);
     }
 
-    return max_flow;
-}
+    height[++n] = 0;
 
-
-void init(){
-    RD(n), m = 2; //fill(hd, hd+n+1);
-
-    Rush{
-        int x, y; RD(x, y);
-        add_edgee(x, y, RD());
+    if (!f(4)) return 0;
+    int l = 4, r = n / 2;
+    while (l < r){
+        int m = (l + r + 1) / 2;
+        if (f(m)) l = m;
+        else r = m - 1;
     }
-
-    s = 1, t = n++;
+    return l + 1;
 }
+
 
 int main(){
 
@@ -497,6 +517,11 @@ int main(){
     //freopen("out.txt", "w", stdout);
 #endif
 
-    init(); OT(Dinitz());
+    while (RD(n)){
+        REP(i, n) RD(a[i]); int o = 1; --n;
+        REP(i, n) checkMin(o, a[i] = a[i+1] - a[i]);
+        --o; REP(i, n) a[i] -= o; a[n] = 0;
+        da(a, sa, n+1, M);
+        OT(solve());
+    }
 }
-

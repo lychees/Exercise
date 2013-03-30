@@ -1,0 +1,1 @@
+transcribe = map (\ch -> if ch == 'T' then 'U' else ch)

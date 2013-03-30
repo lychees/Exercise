@@ -1,4 +1,4 @@
-/** Micro Mezz  o Macro Flation -- Overheated Economy ., Last Update: Mar. 3th 2013 **/ //{
+/** Micro Mezzo Macro Flation -- Overheated Economy ., Last Update: Dec. 24th 2012 **/ //{
 
 /** Header .. **/ //{
 #define LOCAL
@@ -11,7 +11,6 @@
 #include <iomanip>
 #include <numeric>
 #include <cstring>
-#include <climits>
 #include <cassert>
 #include <cstdio>
 #include <string>
@@ -24,10 +23,6 @@
 #include <list>
 #include <set>
 #include <map>
-
-//#include <tr1/unordered_set>
-//#include <tr1/unordered_map>
-//#include <array>
 
 using namespace std;
 
@@ -65,8 +60,6 @@ using namespace std;
 #define REP_2_1(i, j, n, m) REP_1(i, n) REP_1(j, m)
 #define REP_3(i, j, k, n, m, l) REP(i, n) REP(j, m) REP(k, l)
 #define REP_3_1(i, j, k, n, m, l) REP_1(i, n) REP_1(j, m) REP_1(k, l)
-#define REP_4(i, j, k, ii, n, m, l, nn) REP(i, n) REP(j, m) REP(k, l) REP(ii, nn)
-#define REP_4_1(i, j, k, ii, n, m, l, nn) REP_1(i, n) REP_1(j, m) REP_1(k, l) REP_1(ii, nn)
 
 #define ALL(A) A.begin(), A.end()
 #define LLA(A) A.rbegin(), A.rend()
@@ -100,24 +93,10 @@ using namespace std;
 
 #pragma comment(linker, "/STACK:36777216")
 //#pragma GCC optimize ("O2")
-
-string __file__(){
-    string res = __FILE__;
-    int r = SZ(res) - 1; while (res[r] !=  '.') --r;
-    int l = r - 1; while (res[l] != '\\') --l; ++l;
-    return res.substr(l, r-l);
-}
-
-void Exec(string a, string b, string c){
-    if (b.empty()) b = __file__();
-    string cmd = a + ' ' + b + '.' + c;
-    system(cmd.c_str());
-}
-
-void Ruby(string file = ""){Exec("ruby", file, "rb");}
-void Python(string file = ""){Exec("python", file, "py");}
-void Haskell(string file = ""){Exec("runghc", file, "hs");}
-void Pascal(string file = ""){Exec("pascal", file, "pas");}
+#define Ruby system("ruby main.rb")
+#define Haskell system("runghc main.hs")
+#define Python system("python main.py")
+#define Pascal system("fpc main.pas")
 
 typedef long long LL;
 //typedef long double DB;
@@ -142,8 +121,7 @@ typedef vector<VII> VVII;
 
 template<class T> inline T& RD(T &);
 template<class T> inline void OT(const T &);
-inline int RD(){int x; return RD(x);}
-//inline LL RD(){LL x; return RD(x);}
+inline LL RD(){LL x; return RD(x);}
 inline DB& RF(DB &);
 inline DB RF(){DB x; return RF(x);}
 inline char* RS(char *s);
@@ -193,15 +171,13 @@ template<class T0,class T1>inline void RDD(const T0&a, const T1&b){RDD(a),RDD(b)
 template<class T0,class T1,class T2>inline void RDD(const T0&a, const T1&b, const T2&c){RDD(a),RDD(b),RDD(c);}
 
 template<class T> inline void RST(T &A){memset(A, 0, sizeof(A));}
-template<class T> inline void FLC(T &A, int x){memset(A, x, sizeof(A));}
-template<class T> inline void CLR(T &A){A.clear();}
-
 template<class T0, class T1> inline void RST(T0 &A0, T1 &A1){RST(A0), RST(A1);}
 template<class T0, class T1, class T2> inline void RST(T0 &A0, T1 &A1, T2 &A2){RST(A0), RST(A1), RST(A2);}
 template<class T0, class T1, class T2, class T3> inline void RST(T0 &A0, T1 &A1, T2 &A2, T3 &A3){RST(A0), RST(A1), RST(A2), RST(A3);}
 template<class T0, class T1, class T2, class T3, class T4> inline void RST(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4){RST(A0), RST(A1), RST(A2), RST(A3), RST(A4);}
 template<class T0, class T1, class T2, class T3, class T4, class T5> inline void RST(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4, T5 &A5){RST(A0), RST(A1), RST(A2), RST(A3), RST(A4), RST(A5);}
 template<class T0, class T1, class T2, class T3, class T4, class T5, class T6> inline void RST(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4, T5 &A5, T6 &A6){RST(A0), RST(A1), RST(A2), RST(A3), RST(A4), RST(A5), RST(A6);}
+template<class T> inline void FLC(T &A, int x){memset(A, x, sizeof(A));}
 template<class T0, class T1> inline void FLC(T0 &A0, T1 &A1, int x){FLC(A0, x), FLC(A1, x);}
 template<class T0, class T1, class T2> inline void FLC(T0 &A0, T1 &A1, T2 &A2, int x){FLC(A0, x), FLC(A1, x), FLC(A2, x);}
 template<class T0, class T1, class T2, class T3> inline void FLC(T0 &A0, T1 &A1, T2 &A2, T3 &A3, int x){FLC(A0, x), FLC(A1, x), FLC(A2, x), FLC(A3, x);}
@@ -210,6 +186,7 @@ template<class T0, class T1, class T2, class T3, class T4, class T5> inline void
 template<class T0, class T1, class T2, class T3, class T4, class T5, class T6> inline void FLC(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4, T5 &A5, T6 &A6, int x){FLC(A0, x), FLC(A1, x), FLC(A2, x), FLC(A3, x), FLC(A4, x), FLC(A5, x), FLC(A6, x);}
 template<class T> inline void CLR(priority_queue<T, vector<T>, less<T> > &Q){while (!Q.empty()) Q.pop();}
 template<class T> inline void CLR(priority_queue<T, vector<T>, greater<T> > &Q){while (!Q.empty()) Q.pop();}
+template<class T> inline void CLR(T &A){A.clear();}
 template<class T0, class T1> inline void CLR(T0 &A0, T1 &A1){CLR(A0), CLR(A1);}
 template<class T0, class T1, class T2> inline void CLR(T0 &A0, T1 &A1, T2 &A2){CLR(A0), CLR(A1), CLR(A2);}
 template<class T0, class T1, class T2, class T3> inline void CLR(T0 &A0, T1 &A1, T2 &A2, T3 &A3){CLR(A0), CLR(A1), CLR(A2), CLR(A3);}
@@ -218,18 +195,15 @@ template<class T0, class T1, class T2, class T3, class T4, class T5> inline void
 template<class T0, class T1, class T2, class T3, class T4, class T5, class T6> inline void CLR(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4, T5 &A5, T6 &A6){CLR(A0), CLR(A1), CLR(A2), CLR(A3), CLR(A4), CLR(A5), CLR(A6);}
 template<class T> inline void CLR(T &A, int n){REP(i, n) CLR(A[i]);}
 
-template<class T> inline bool EPT(T &a){return a.empty();}
 template<class T> inline T& SRT(T &A){sort(ALL(A)); return A;}
-template<class T> inline T& RVS(T &A){reverse(ALL(A)); return A;}
-template<class T> inline T& UNQ(T &A){A.resize(unique(ALL(SRT(A)))-A.begin());return A;}
-
 template<class T, class C> inline T& SRT(T &A, C B){sort(ALL(A), B); return A;}
+template<class T> inline T& UNQ(T &A){A.resize(unique(ALL(SRT(A)))-A.begin());return A;}
 
 //}
 
 /** Constant List .. **/ //{
 
-const int MOD = int(1e9) + 7;
+const int MOD = int(1e9) + 9;
 //int MOD = 99990001;
 const int INF = 0x3f3f3f3f;
 const LL INFF = 1LL << 60;
@@ -259,11 +233,6 @@ template<class T> inline T cub(T a){return a*a*a;}
 inline int ceil(int x, int y){return (x - 1) / y + 1;}
 inline int sgn(DB x){return x < -EPS ? -1 : x > EPS;}
 inline int sgn(DB x, DB y){return sgn(x - y);}
-
-inline DB cot(DB x){return (DB)1/tan(x);};
-inline DB sec(DB x){return (DB)1/cos(x);};
-inline DB csc(DB x){return (DB)1/sin(x);};
-
 //}
 // <<= '1. Bitwise Operation ., //{
 namespace BO{
@@ -297,20 +266,19 @@ template<class T> inline bool even(T x){return !odd(x);}
 template<class T> inline T low_bit(T x) {return x & -x;}
 template<class T> inline T high_bit(T x) {T p = low_bit(x);while (p != x) x -= p, p = low_bit(x);return p;}
 template<class T> inline T cover_bit(T x){T p = 1; while (p < x) p <<= 1;return p;}
-template<class T> inline int cover_idx(T x){int p = 0; while (_1(p) < x ) ++p; return p;}
 
+inline int low_idx(int x){return __builtin_ffs(x);}
+inline int low_idx(LL x){return __builtin_ffsll(x);}
+inline int high_idx(int x){return low_idx(reverse_bits(x));}
+inline int high_idx(LL x){return low_idx(reverse_bits(x));}
 inline int clz(int x){return __builtin_clz(x);}
 inline int clz(LL x){return __builtin_clzll(x);}
 inline int ctz(int x){return __builtin_ctz(x);}
 inline int ctz(LL x){return __builtin_ctzll(x);}
-inline int lg2(int x){return !x ? -1 : 31 - clz(x);}
-inline int lg2(LL x){return !x ? -1 : 63 - clz(x);}
-inline int low_idx(int x){return !x ? -1 : ctz(x);}
-inline int low_idx(LL x){return !x ? -1 : ctz(x);}
-inline int high_idx(int x){return lg2(x);}
-inline int high_idx(LL x){return lg2(x);}
 inline int parity(int x){return __builtin_parity(x);}
 inline int parity(LL x){return __builtin_parityll(x);}
+inline int lg2(int a){return 31 - clz(a);}
+inline int lg2(LL a){return 63 - clz(a);}
 inline int count_bits(int x){return __builtin_popcount(x);}
 inline int count_bits(LL x){return __builtin_popcountll(x);}
 
@@ -381,8 +349,6 @@ inline int phi(int n){
 }
 
 } using namespace NT;//}
-//}
-
 /** I/O Accelerator Interface .. **/ //{
 template<class T> inline T& RD(T &x){
     //cin >> x;
@@ -393,7 +359,6 @@ template<class T> inline T& RD(T &x){
 }
 
 inline DB& RF(DB &x){
-    //cin >> x;
     scanf("%lf", &x);
     /*char t; while ((t=getchar())==' '||t=='\n'); x = t - '0';
     while ((t=getchar())!=' '&&t!='\n'&&t!='.')x*=10,x+=t-'0';
@@ -407,96 +372,226 @@ inline char* RS(char *s){
     return s;
 }
 
-LL last_ans; int Case; template<class T> inline void OT(const T &x){
+int Case; template<class T> inline void OT(const T &x){
     //printf("Case %d: %d\n", ++Case, x);
-    //printf("%lld ", x);
-    //printf("%d\n", x);
-    cout << x << endl;
-    //last_ans = x;
+    //printf("%.2lf\n", x);
+    printf("%d\n", x);
+    //cout << x << endl;
 }
 //}
 
 //}/* .................................................................................................................................. */
 
-const int N = 5009, M = 2 * 30009;
+const int P = 3214567;
+const int N = 50;
 
-int D[N], hd[N], suc[M], to[M], cap[M];
-int n, m, s, t;
+map<ULL, int> F[10];
+VI h; bool v[10][N]; int n, m;
 
-inline void add_edge(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = 0, hd[y] = m++;
-}
+int f(int k, int h[N]){
+    if (k < 0) return 1;
+    ULL x = 0; REP(i, m) x *= P, x += h[i];
 
-inline void add_edgee(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = c, hd[y] = m++;
-}
-
-#define v to[i]
-#define c cap[i]
-#define f cap[i^1]
-
-bool bfs(){
-    static int Q[N]; int cz = 0, op = 1;
-    fill(D, D+n, 0), D[Q[0] = s] = 1; while (cz < op){
-        int u = Q[cz++]; REP_G(i, u) if (!D[v] && c){
-            D[Q[op++] = v] = D[u] + 1;
-            if (v == t) return 1;
+    if (F[k].count(x)) return F[k][x];
+    int &res = F[k][x], hh[N]; REP(i0, m){
+        int i; REP_N(i, m){
+            int hi = ::h[k] - abs(i-i0);
+            if (hi > h[i] != v[k][i]) break;
+            hh[i] = max(h[i], hi);
         }
+        if (i == m) INC(res, f(k-1, hh));
     }
-    return 0;
-}
-
-LL Dinitz(){
-
-    to[0] = s;
-    LL max_flow = 0;
-
-    while (bfs()){
-
-        static int sta[N], cur[N]; int top = 0;
-        sta[0] = 0, cur[s] = hd[s]; while (top != -1){
-
-            int u = to[sta[top]], i; if (u == t){
-                int d = INF; REP_1(ii, top) i = sta[ii], checkMin(d, c);                  max_flow += d;
-                DWN_1(ii, top, 1){i = sta[ii], f += d, c -= d; if (!c) top = ii - 1;}
-                u = to[sta[top]];
-            }
-
-            for (i=cur[u];i;i=suc[i])
-                if (D[u] + 1 == D[v] && c) break;
-
-            if (!i) D[u] = 0, --top;
-            else {
-                cur[u] = suc[i], cur[v] = hd[v];
-                sta[++top] = i;
-            }
-        }
-    }
-
-    return max_flow;
+    return res;
 }
 
 
-void init(){
-    RD(n), m = 2; //fill(hd, hd+n+1);
+class Mountains {
+public:
+	int countPlacements(vector <int> h, vector <string> v) {
+	    ::h = h, n = SZ(h), m = SZ(v[0]); //REP(i, n) CLR(F[i]);
+	    REP_2(i, j, n, m) ::v[i][j] = v[i][j] == 'X';
+	    int _h[N]={}; return f(n-1, _h);
+	}
+};
 
-    Rush{
-        int x, y; RD(x, y);
-        add_edgee(x, y, RD());
-    }
 
-    s = 1, t = n++;
+// BEGIN CUT HERE
+namespace moj_harness {
+	int run_test_case(int);
+	void run_test(int casenum = -1, bool quiet = false) {
+		if (casenum != -1) {
+			if (run_test_case(casenum) == -1 && !quiet) {
+				cerr << "Illegal input! Test case " << casenum << " does not exist." << endl;
+			}
+			return;
+		}
+
+		int correct = 0, total = 0;
+		for (int i=0;; ++i) {
+			int x = run_test_case(i);
+			if (x == -1) {
+				if (i >= 100) break;
+				continue;
+			}
+			correct += x;
+			++total;
+		}
+
+		if (total == 0) {
+			cerr << "No test cases run." << endl;
+		} else if (correct < total) {
+			cerr << "Some cases FAILED (passed " << correct << " of " << total << ")." << endl;
+		} else {
+			cerr << "All " << total << " tests passed!" << endl;
+		}
+	}
+
+	int verify_case(int casenum, const int &expected, const int &received, clock_t elapsed) {
+		cerr << "Example " << casenum << "... ";
+
+		string verdict;
+		vector<string> info;
+		char buf[100];
+
+		if (elapsed > CLOCKS_PER_SEC / 200) {
+			sprintf(buf, "time %.2fs", elapsed * (1.0/CLOCKS_PER_SEC));
+			info.push_back(buf);
+		}
+
+		if (expected == received) {
+			verdict = "PASSED";
+		} else {
+			verdict = "FAILED";
+		}
+
+		cerr << verdict;
+		if (!info.empty()) {
+			cerr << " (";
+			for (int i=0; i<(int)info.size(); ++i) {
+				if (i > 0) cerr << ", ";
+				cerr << info[i];
+			}
+			cerr << ")";
+		}
+		cerr << endl;
+
+		if (verdict == "FAILED") {
+			cerr << "    Expected: " << expected << endl;
+			cerr << "    Received: " << received << endl;
+		}
+
+		return verdict == "PASSED";
+	}
+
+	int run_test_case(int casenum) {
+		switch (casenum) {
+		case 0: {
+			int heights[]             = {2, 3, 2};
+			string visibility[]       = {"------",
+ "XXXX--",
+ "---XXX"};
+			int expected__            = 4;
+
+			clock_t start__           = clock();
+			int received__            = Mountains().countPlacements(vector <int>(heights, heights + (sizeof heights / sizeof heights[0])), vector <string>(visibility, visibility + (sizeof visibility / sizeof visibility[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+		case 1: {
+			int heights[]             = {4, 3, 4};
+			string visibility[]       = {"XXXXX--------",
+ "----------XXX",
+ "----XXXXXXX--"};
+			int expected__            = 4;
+
+			clock_t start__           = clock();
+			int received__            = Mountains().countPlacements(vector <int>(heights, heights + (sizeof heights / sizeof heights[0])), vector <string>(visibility, visibility + (sizeof visibility / sizeof visibility[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+		case 2: {
+			int heights[]             = {13, 2, 3, 2};
+			string visibility[]       = {"XXXXXXXXX",
+ "-XXX-----",
+ "----XXXXX",
+ "-----XXX-"};
+			int expected__            = 9;
+
+			clock_t start__           = clock();
+			int received__            = Mountains().countPlacements(vector <int>(heights, heights + (sizeof heights / sizeof heights[0])), vector <string>(visibility, visibility + (sizeof visibility / sizeof visibility[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+		case 3: {
+			int heights[]             = {8, 2, 9, 3, 10};
+			string visibility[]       = {"X------",
+ "-------",
+ "------X",
+ "-------",
+ "XXXXXXX"};
+			int expected__            = 98;
+
+			clock_t start__           = clock();
+			int received__            = Mountains().countPlacements(vector <int>(heights, heights + (sizeof heights / sizeof heights[0])), vector <string>(visibility, visibility + (sizeof visibility / sizeof visibility[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+		case 4: {
+			int heights[]             = {20, 20, 20, 20, 20, 20, 45, 50, 49, 50};
+			string visibility[]       = {"-------------------",
+ "-------------------",
+ "-------------------",
+ "-------------------",
+ "-------------------",
+ "-------------------",
+ "-------------------",
+ "------------XXXXXXX",
+ "XXXXXXX------------",
+ "XXXXXXXXXXXXXXXXXXX"}
+;
+			int expected__            = 973726691;
+
+			clock_t start__           = clock();
+			int received__            = Mountains().countPlacements(vector <int>(heights, heights + (sizeof heights / sizeof heights[0])), vector <string>(visibility, visibility + (sizeof visibility / sizeof visibility[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+
+		// custom cases
+      case 5: {
+			int heights[]             = {50, 22, 42, 11, 15, 42, 3};
+			string visibility[]       = {"---------------------------XXXXXXXXXXXXXXXXXXXXXX", "-------------------------------------------------", "-----------------------XXXXXXXXXXXXXXXXXXXXXXXXXX", "-------------------------------------------------", "-------------------------------------------------", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "--------------------------XXXXX------------------"};
+			int expected__            = 1687756;
+
+			clock_t start__           = clock();
+			int received__            = Mountains().countPlacements(vector <int>(heights, heights + (sizeof heights / sizeof heights[0])), vector <string>(visibility, visibility + (sizeof visibility / sizeof visibility[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+/*      case 6: {
+			int heights[]             = ;
+			string visibility[]       = ;
+			int expected__            = ;
+
+			clock_t start__           = clock();
+			int received__            = Mountains().countPlacements(vector <int>(heights, heights + (sizeof heights / sizeof heights[0])), vector <string>(visibility, visibility + (sizeof visibility / sizeof visibility[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}*/
+/*      case 7: {
+			int heights[]             = ;
+			string visibility[]       = ;
+			int expected__            = ;
+
+			clock_t start__           = clock();
+			int received__            = Mountains().countPlacements(vector <int>(heights, heights + (sizeof heights / sizeof heights[0])), vector <string>(visibility, visibility + (sizeof visibility / sizeof visibility[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}*/
+		default:
+			return -1;
+		}
+	}
 }
 
-int main(){
-
-#ifndef ONLINE_JUDGE
-    freopen("in.txt", "r", stdin);
-    //freopen("out.txt", "w", stdout);
-#endif
-
-    init(); OT(Dinitz());
+int main(int argc, char *argv[]) {
+	if (argc == 1) {
+		moj_harness::run_test();
+	} else {
+		for (int i=1; i<argc; ++i)
+			moj_harness::run_test(atoi(argv[i]));
+	}
 }
-
+// END CUT HERE

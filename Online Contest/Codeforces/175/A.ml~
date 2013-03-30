@@ -1,0 +1,15 @@
+let read_int () = Scanf.bscanf Scanf.Scanning.stdib " %d " (fun x -> x)
+let read_string () = Scanf.bscanf Scanf.Scanning.stdib " %s " (fun x -> x)
+
+let() = 
+  let n = read_int() in
+  let k = read_int() in
+  for i = 1 to n - k do
+    Printf.printf "%d " i
+  done;
+
+  if k != 0 then Printf.printf "%d" n
+  for i = n - k + 1 to n do
+    Printf.printf "%d 2*n-k-i
+  done;
+

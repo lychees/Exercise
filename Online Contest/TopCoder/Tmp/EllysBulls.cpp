@@ -1,4 +1,4 @@
-/** Micro Mezz  o Macro Flation -- Overheated Economy ., Last Update: Mar. 3th 2013 **/ //{
+/** Template for TC ., Last Update: Dec. 24th 2012 **/ //{
 
 /** Header .. **/ //{
 #define LOCAL
@@ -11,7 +11,6 @@
 #include <iomanip>
 #include <numeric>
 #include <cstring>
-#include <climits>
 #include <cassert>
 #include <cstdio>
 #include <string>
@@ -24,10 +23,6 @@
 #include <list>
 #include <set>
 #include <map>
-
-//#include <tr1/unordered_set>
-//#include <tr1/unordered_map>
-//#include <array>
 
 using namespace std;
 
@@ -65,8 +60,6 @@ using namespace std;
 #define REP_2_1(i, j, n, m) REP_1(i, n) REP_1(j, m)
 #define REP_3(i, j, k, n, m, l) REP(i, n) REP(j, m) REP(k, l)
 #define REP_3_1(i, j, k, n, m, l) REP_1(i, n) REP_1(j, m) REP_1(k, l)
-#define REP_4(i, j, k, ii, n, m, l, nn) REP(i, n) REP(j, m) REP(k, l) REP(ii, nn)
-#define REP_4_1(i, j, k, ii, n, m, l, nn) REP_1(i, n) REP_1(j, m) REP_1(k, l) REP_1(ii, nn)
 
 #define ALL(A) A.begin(), A.end()
 #define LLA(A) A.rbegin(), A.rend()
@@ -100,24 +93,10 @@ using namespace std;
 
 #pragma comment(linker, "/STACK:36777216")
 //#pragma GCC optimize ("O2")
-
-string __file__(){
-    string res = __FILE__;
-    int r = SZ(res) - 1; while (res[r] !=  '.') --r;
-    int l = r - 1; while (res[l] != '\\') --l; ++l;
-    return res.substr(l, r-l);
-}
-
-void Exec(string a, string b, string c){
-    if (b.empty()) b = __file__();
-    string cmd = a + ' ' + b + '.' + c;
-    system(cmd.c_str());
-}
-
-void Ruby(string file = ""){Exec("ruby", file, "rb");}
-void Python(string file = ""){Exec("python", file, "py");}
-void Haskell(string file = ""){Exec("runghc", file, "hs");}
-void Pascal(string file = ""){Exec("pascal", file, "pas");}
+#define Ruby system("ruby main.rb")
+#define Haskell system("runghc main.hs")
+#define Python system("python main.py")
+#define Pascal system("fpc main.pas")
 
 typedef long long LL;
 //typedef long double DB;
@@ -140,68 +119,14 @@ typedef vector<PII> VII;
 typedef vector<VI> VVI;
 typedef vector<VII> VVII;
 
-template<class T> inline T& RD(T &);
-template<class T> inline void OT(const T &);
-inline int RD(){int x; return RD(x);}
-//inline LL RD(){LL x; return RD(x);}
-inline DB& RF(DB &);
-inline DB RF(){DB x; return RF(x);}
-inline char* RS(char *s);
-inline char& RC(char &c);
-inline char RC();
-inline char& RC(char &c){scanf(" %c", &c); return c;}
-inline char RC(){char c; return RC(c);}
-//inline char& RC(char &c){c = getchar(); return c;}
-//inline char RC(){return getchar();}
-
-template<class T> inline T& RDD(T &x){
-    char c; for (c = getchar(); c < '-'; c = getchar());
-    if (c == '-'){x = '0' - getchar(); for (c = getchar(); '0' <= c && c <= '9'; c = getchar()) x = x * 10 + '0' - c;}
-    else {x = c - '0'; for (c = getchar(); '0' <= c && c <= '9'; c = getchar()) x = x * 10 + c - '0';}
-    return x;
-}
-
-inline LL RDD(){LL x; return RDD(x);}
-
-template<class T0, class T1> inline T0& RD(T0 &x0, T1 &x1){RD(x0), RD(x1); return x0;}
-template<class T0, class T1, class T2> inline T0& RD(T0 &x0, T1 &x1, T2 &x2){RD(x0), RD(x1), RD(x2); return x0;}
-template<class T0, class T1, class T2, class T3> inline T0& RD(T0 &x0, T1 &x1, T2 &x2, T3 &x3){RD(x0), RD(x1), RD(x2), RD(x3); return x0;}
-template<class T0, class T1, class T2, class T3, class T4> inline T0& RD(T0 &x0, T1 &x1, T2 &x2, T3 &x3, T4 &x4){RD(x0), RD(x1), RD(x2), RD(x3), RD(x4); return x0;}
-template<class T0, class T1, class T2, class T3, class T4, class T5> inline T0& RD(T0 &x0, T1 &x1, T2 &x2, T3 &x3, T4 &x4, T5 &x5){RD(x0), RD(x1), RD(x2), RD(x3), RD(x4), RD(x5); return x0;}
-template<class T0, class T1, class T2, class T3, class T4, class T5, class T6> inline T0& RD(T0 &x0, T1 &x1, T2 &x2, T3 &x3, T4 &x4, T5 &x5, T6 &x6){RD(x0), RD(x1), RD(x2), RD(x3), RD(x4), RD(x5), RD(x6); return x0;}
-template<class T0, class T1> inline void OT(const T0 &x0, const T1 &x1){OT(x0), OT(x1);}
-template<class T0, class T1, class T2> inline void OT(const T0 &x0, const T1 &x1, const T2 &x2){OT(x0), OT(x1), OT(x2);}
-template<class T0, class T1, class T2, class T3> inline void OT(const T0 &x0, const T1 &x1, const T2 &x2, const T3 &x3){OT(x0), OT(x1), OT(x2), OT(x3);}
-template<class T0, class T1, class T2, class T3, class T4> inline void OT(const T0 &x0, const T1 &x1, const T2 &x2, const T3 &x3, const T4 &x4){OT(x0), OT(x1), OT(x2), OT(x3), OT(x4);}
-template<class T0, class T1, class T2, class T3, class T4, class T5> inline void OT(const T0 &x0, const T1 &x1, const T2 &x2, const T3 &x3, const T4 &x4, const T5 &x5){OT(x0), OT(x1), OT(x2), OT(x3), OT(x4), OT(x5);}
-template<class T0, class T1, class T2, class T3, class T4, class T5, class T6> inline void OT(const T0 &x0, const T1 &x1, const T2 &x2, const T3 &x3, const T4 &x4, const T5 &x5, const T6 &x6){OT(x0), OT(x1), OT(x2), OT(x3), OT(x4), OT(x5), OT(x6);}
-inline char& RC(char &a, char &b){RC(a), RC(b); return a;}
-inline char& RC(char &a, char &b, char &c){RC(a), RC(b), RC(c); return a;}
-inline char& RC(char &a, char &b, char &c, char &d){RC(a), RC(b), RC(c), RC(d); return a;}
-inline char& RC(char &a, char &b, char &c, char &d, char &e){RC(a), RC(b), RC(c), RC(d), RC(e); return a;}
-inline char& RC(char &a, char &b, char &c, char &d, char &e, char &f){RC(a), RC(b), RC(c), RC(d), RC(e), RC(f); return a;}
-inline char& RC(char &a, char &b, char &c, char &d, char &e, char &f, char &g){RC(a), RC(b), RC(c), RC(d), RC(e), RC(f), RC(g); return a;}
-inline DB& RF(DB &a, DB &b){RF(a), RF(b); return a;}
-inline DB& RF(DB &a, DB &b, DB &c){RF(a), RF(b), RF(c); return a;}
-inline DB& RF(DB &a, DB &b, DB &c, DB &d){RF(a), RF(b), RF(c), RF(d); return a;}
-inline DB& RF(DB &a, DB &b, DB &c, DB &d, DB &e){RF(a), RF(b), RF(c), RF(d), RF(e); return a;}
-inline DB& RF(DB &a, DB &b, DB &c, DB &d, DB &e, DB &f){RF(a), RF(b), RF(c), RF(d), RF(e), RF(f); return a;}
-inline DB& RF(DB &a, DB &b, DB &c, DB &d, DB &e, DB &f, DB &g){RF(a), RF(b), RF(c), RF(d), RF(e), RF(f), RF(g); return a;}
-inline void RS(char *s1, char *s2){RS(s1), RS(s2);}
-inline void RS(char *s1, char *s2, char *s3){RS(s1), RS(s2), RS(s3);}
-template<class T0,class T1>inline void RDD(const T0&a, const T1&b){RDD(a),RDD(b);}
-template<class T0,class T1,class T2>inline void RDD(const T0&a, const T1&b, const T2&c){RDD(a),RDD(b),RDD(c);}
-
 template<class T> inline void RST(T &A){memset(A, 0, sizeof(A));}
-template<class T> inline void FLC(T &A, int x){memset(A, x, sizeof(A));}
-template<class T> inline void CLR(T &A){A.clear();}
-
 template<class T0, class T1> inline void RST(T0 &A0, T1 &A1){RST(A0), RST(A1);}
 template<class T0, class T1, class T2> inline void RST(T0 &A0, T1 &A1, T2 &A2){RST(A0), RST(A1), RST(A2);}
 template<class T0, class T1, class T2, class T3> inline void RST(T0 &A0, T1 &A1, T2 &A2, T3 &A3){RST(A0), RST(A1), RST(A2), RST(A3);}
 template<class T0, class T1, class T2, class T3, class T4> inline void RST(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4){RST(A0), RST(A1), RST(A2), RST(A3), RST(A4);}
 template<class T0, class T1, class T2, class T3, class T4, class T5> inline void RST(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4, T5 &A5){RST(A0), RST(A1), RST(A2), RST(A3), RST(A4), RST(A5);}
 template<class T0, class T1, class T2, class T3, class T4, class T5, class T6> inline void RST(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4, T5 &A5, T6 &A6){RST(A0), RST(A1), RST(A2), RST(A3), RST(A4), RST(A5), RST(A6);}
+template<class T> inline void FLC(T &A, int x){memset(A, x, sizeof(A));}
 template<class T0, class T1> inline void FLC(T0 &A0, T1 &A1, int x){FLC(A0, x), FLC(A1, x);}
 template<class T0, class T1, class T2> inline void FLC(T0 &A0, T1 &A1, T2 &A2, int x){FLC(A0, x), FLC(A1, x), FLC(A2, x);}
 template<class T0, class T1, class T2, class T3> inline void FLC(T0 &A0, T1 &A1, T2 &A2, T3 &A3, int x){FLC(A0, x), FLC(A1, x), FLC(A2, x), FLC(A3, x);}
@@ -210,6 +135,7 @@ template<class T0, class T1, class T2, class T3, class T4, class T5> inline void
 template<class T0, class T1, class T2, class T3, class T4, class T5, class T6> inline void FLC(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4, T5 &A5, T6 &A6, int x){FLC(A0, x), FLC(A1, x), FLC(A2, x), FLC(A3, x), FLC(A4, x), FLC(A5, x), FLC(A6, x);}
 template<class T> inline void CLR(priority_queue<T, vector<T>, less<T> > &Q){while (!Q.empty()) Q.pop();}
 template<class T> inline void CLR(priority_queue<T, vector<T>, greater<T> > &Q){while (!Q.empty()) Q.pop();}
+template<class T> inline void CLR(T &A){A.clear();}
 template<class T0, class T1> inline void CLR(T0 &A0, T1 &A1){CLR(A0), CLR(A1);}
 template<class T0, class T1, class T2> inline void CLR(T0 &A0, T1 &A1, T2 &A2){CLR(A0), CLR(A1), CLR(A2);}
 template<class T0, class T1, class T2, class T3> inline void CLR(T0 &A0, T1 &A1, T2 &A2, T3 &A3){CLR(A0), CLR(A1), CLR(A2), CLR(A3);}
@@ -218,18 +144,15 @@ template<class T0, class T1, class T2, class T3, class T4, class T5> inline void
 template<class T0, class T1, class T2, class T3, class T4, class T5, class T6> inline void CLR(T0 &A0, T1 &A1, T2 &A2, T3 &A3, T4 &A4, T5 &A5, T6 &A6){CLR(A0), CLR(A1), CLR(A2), CLR(A3), CLR(A4), CLR(A5), CLR(A6);}
 template<class T> inline void CLR(T &A, int n){REP(i, n) CLR(A[i]);}
 
-template<class T> inline bool EPT(T &a){return a.empty();}
 template<class T> inline T& SRT(T &A){sort(ALL(A)); return A;}
-template<class T> inline T& RVS(T &A){reverse(ALL(A)); return A;}
-template<class T> inline T& UNQ(T &A){A.resize(unique(ALL(SRT(A)))-A.begin());return A;}
-
 template<class T, class C> inline T& SRT(T &A, C B){sort(ALL(A), B); return A;}
+template<class T> inline T& UNQ(T &A){A.resize(unique(ALL(SRT(A)))-A.begin());return A;}
 
 //}
 
 /** Constant List .. **/ //{
 
-const int MOD = int(1e9) + 7;
+const int MOD = 1000000007;
 //int MOD = 99990001;
 const int INF = 0x3f3f3f3f;
 const LL INFF = 1LL << 60;
@@ -259,11 +182,6 @@ template<class T> inline T cub(T a){return a*a*a;}
 inline int ceil(int x, int y){return (x - 1) / y + 1;}
 inline int sgn(DB x){return x < -EPS ? -1 : x > EPS;}
 inline int sgn(DB x, DB y){return sgn(x - y);}
-
-inline DB cot(DB x){return (DB)1/tan(x);};
-inline DB sec(DB x){return (DB)1/cos(x);};
-inline DB csc(DB x){return (DB)1/sin(x);};
-
 //}
 // <<= '1. Bitwise Operation ., //{
 namespace BO{
@@ -297,20 +215,19 @@ template<class T> inline bool even(T x){return !odd(x);}
 template<class T> inline T low_bit(T x) {return x & -x;}
 template<class T> inline T high_bit(T x) {T p = low_bit(x);while (p != x) x -= p, p = low_bit(x);return p;}
 template<class T> inline T cover_bit(T x){T p = 1; while (p < x) p <<= 1;return p;}
-template<class T> inline int cover_idx(T x){int p = 0; while (_1(p) < x ) ++p; return p;}
 
+inline int low_idx(int x){return __builtin_ffs(x);}
+inline int low_idx(LL x){return __builtin_ffsll(x);}
+inline int high_idx(int x){return low_idx(reverse_bits(x));}
+inline int high_idx(LL x){return low_idx(reverse_bits(x));}
 inline int clz(int x){return __builtin_clz(x);}
 inline int clz(LL x){return __builtin_clzll(x);}
 inline int ctz(int x){return __builtin_ctz(x);}
 inline int ctz(LL x){return __builtin_ctzll(x);}
-inline int lg2(int x){return !x ? -1 : 31 - clz(x);}
-inline int lg2(LL x){return !x ? -1 : 63 - clz(x);}
-inline int low_idx(int x){return !x ? -1 : ctz(x);}
-inline int low_idx(LL x){return !x ? -1 : ctz(x);}
-inline int high_idx(int x){return lg2(x);}
-inline int high_idx(LL x){return lg2(x);}
 inline int parity(int x){return __builtin_parity(x);}
 inline int parity(LL x){return __builtin_parityll(x);}
+inline int lg2(int a){return 31 - clz(a);}
+inline int lg2(LL a){return 63 - clz(a);}
 inline int count_bits(int x){return __builtin_popcount(x);}
 inline int count_bits(LL x){return __builtin_popcountll(x);}
 
@@ -381,122 +298,284 @@ inline int phi(int n){
 }
 
 } using namespace NT;//}
-//}
-
-/** I/O Accelerator Interface .. **/ //{
-template<class T> inline T& RD(T &x){
-    //cin >> x;
-    scanf("%d", &x);
-    //char c; for (c = getchar(); c < '0'; c = getchar()); x = c - '0'; for (c = getchar(); '0' <= c && c <= '9'; c = getchar()) x = x * 10 + c - '0';
-    //char c; c = getchar(); x = c - '0'; for (c = getchar(); c >= '0'; c = getchar()) x = x * 10 + c - '0';
-    return x;
-}
-
-inline DB& RF(DB &x){
-    //cin >> x;
-    scanf("%lf", &x);
-    /*char t; while ((t=getchar())==' '||t=='\n'); x = t - '0';
-    while ((t=getchar())!=' '&&t!='\n'&&t!='.')x*=10,x+=t-'0';
-    if (t=='.'){DB l=1; while ((t=getchar())!=' '&&t!='\n')l*=0.1,x += (t-'0')*l;}*/
-    return x;
-}
-
-inline char* RS(char *s){
-    //gets(s);
-    scanf("%s", s);
-    return s;
-}
-
-LL last_ans; int Case; template<class T> inline void OT(const T &x){
-    //printf("Case %d: %d\n", ++Case, x);
-    //printf("%lld ", x);
-    //printf("%d\n", x);
-    cout << x << endl;
-    //last_ans = x;
-}
-//}
 
 //}/* .................................................................................................................................. */
 
-const int N = 5009, M = 2 * 30009;
+const int N = 50;
 
-int D[N], hd[N], suc[M], to[M], cap[M];
-int n, m, s, t;
+VS g; VI u, r; int len , n;
+int ans[100] , out[100];
+int state[1<<10] , mask[10];
+VI last_mask[10];
 
-inline void add_edge(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = 0, hd[y] = m++;
-}
-
-inline void add_edgee(int x, int y, int c){
-    suc[m] = hd[x], to[m] = y, cap[m] = c, hd[x] = m++;
-    suc[m] = hd[y], to[m] = x, cap[m] = c, hd[y] = m++;
-}
-
-#define v to[i]
-#define c cap[i]
-#define f cap[i^1]
-
-bool bfs(){
-    static int Q[N]; int cz = 0, op = 1;
-    fill(D, D+n, 0), D[Q[0] = s] = 1; while (cz < op){
-        int u = Q[cz++]; REP_G(i, u) if (!D[v] && c){
-            D[Q[op++] = v] = D[u] + 1;
-            if (v == t) return 1;
-        }
-    }
-    return 0;
-}
-
-LL Dinitz(){
-
-    to[0] = s;
-    LL max_flow = 0;
-
-    while (bfs()){
-
-        static int sta[N], cur[N]; int top = 0;
-        sta[0] = 0, cur[s] = hd[s]; while (top != -1){
-
-            int u = to[sta[top]], i; if (u == t){
-                int d = INF; REP_1(ii, top) i = sta[ii], checkMin(d, c);                  max_flow += d;
-                DWN_1(ii, top, 1){i = sta[ii], f += d, c -= d; if (!c) top = ii - 1;}
-                u = to[sta[top]];
-            }
-
-            for (i=cur[u];i;i=suc[i])
-                if (D[u] + 1 == D[v] && c) break;
-
-            if (!i) D[u] = 0, --top;
-            else {
-                cur[u] = suc[i], cur[v] = hd[v];
-                sta[++top] = i;
-            }
-        }
-    }
-
-    return max_flow;
-}
-
+namespace Search{
 
 void init(){
-    RD(n), m = 2; //fill(hd, hd+n+1);
+        REP(i, len) {CLR(last_mask[i]), mask[i] = 1 << i;}
+        REP_C(i , _1(len)){
+            state[i] = 0; int j = i; while(j){
+                state[i] += j & 1;
+                j >>= 1;
+            }
+            last_mask[state[i]].PB(i);
+        }
+    }
+    int check(int x){
+        int res = 0;
+        REP(i , len){
+            if (ans[i] != -1 && g[x][i] == '0' + ans[i])
+                res |= mask[i];
+        }
+        return res;
+    }
+    void getBBit(int x , int now , bool newB[10][10] , bool B[10][10]){
+        REP_2(i , j , len , 10) newB[i][j] = B[i][j];
+        REP(i , len)
+        if (!(now & mask[i]))
+            newB[i][g[x][i] - '0'] = 1;
+        else{
+            REP(j , 10)
+                newB[i][j] = j == g[x][i] - '0';
+        }
+    }
+    void ins(int x , int now){
+        REP(i , len) if (now & mask[i])
+            ans[i] = g[x][i] - '0';
+    }
+    void reset(int x , int now){
+        REP(i , len) if (now & mask[i])
+            ans[i] = -1;
+    }
+    bool isB(int x , int now , bool B[10][10]){
+        REP(i , len) if (now & mask[i])
+            if (B[i][g[x][i] - '0']) return true;
+        return false;
+    }
+} using namespace Search;
 
-    Rush{
-        int x, y; RD(x, y);
-        add_edgee(x, y, RD());
+class EllysBulls {
+public:
+
+    int gao(int x , int all , bool B[10][10]){
+        if (x >= n){
+            REP(i , len){
+                if (ans[i] != -1) continue;
+                int res = -1;
+                REP(j , 10){
+                    if (!B[i][j]){
+                        if (res != -1) return 2;
+                        res = j;
+                    }
+                }
+                ans[i] = res;
+            }
+            REP(i , len) out[i] = ans[i];
+            return 1;
+        }
+
+        int now = check(x);
+        if (state[now] > r[x]) return 0;
+        bool newB[10][10];
+        int ret = 0;
+        REP_C(i , SZ(last_mask[r[x] - state[now]])){
+            int add = last_mask[r[x] - state[now]][i];
+            if (add & all) continue;
+            if (isB(x , add , B)) continue;
+            getBBit(x , (add | now) , newB , B);
+            ins(x , add);
+            ret += gao(x + 1 , all | add , newB);
+            reset(x, add);
+            if (ret > 1) return ret;
+        }
+        return ret;
     }
 
-    s = 1, t = n++;
+    bool B[10][10];
+
+	string getNumber(vector <string> guesses, vector <int> bulls) {
+
+		g = guesses, u = bulls, r = bulls, len = SZ(g[0]);
+		FLC(ans , -1), n = SZ(g); REP(i, n) u[i] = len - u[i];
+
+		init(), RST(B); int res = gao(0, 0, B);
+        if (res == 0) return "Liar"; if (res > 1) return "Ambiguity";
+        string result_string; REP(i, len){
+            result_string += out[i] + '0';
+        }
+        return result_string;
+	}
+};
+
+// BEGIN CUT HERE
+namespace moj_harness {
+	int run_test_case(int);
+	void run_test(int casenum = -1, bool quiet = false) {
+		if (casenum != -1) {
+			if (run_test_case(casenum) == -1 && !quiet) {
+				cerr << "Illegal input! Test case " << casenum << " does not exist." << endl;
+			}
+			return;
+		}
+
+		int correct = 0, total = 0;
+		for (int i=0;; ++i) {
+			int x = run_test_case(i);
+			if (x == -1) {
+				if (i >= 100) break;
+				continue;
+			}
+			correct += x;
+			++total;
+		}
+
+		if (total == 0) {
+			cerr << "No test cases run." << endl;
+		} else if (correct < total) {
+			cerr << "Some cases FAILED (passed " << correct << " of " << total << ")." << endl;
+		} else {
+			cerr << "All " << total << " tests passed!" << endl;
+		}
+	}
+
+	int verify_case(int casenum, const string &expected, const string &received, clock_t elapsed) {
+		cerr << "Example " << casenum << "... ";
+
+		string verdict;
+		vector<string> info;
+		char buf[100];
+
+		if (elapsed > CLOCKS_PER_SEC / 200) {
+			sprintf(buf, "time %.2fs", elapsed * (1.0/CLOCKS_PER_SEC));
+			info.push_back(buf);
+		}
+
+		if (expected == received) {
+			verdict = "PASSED";
+		} else {
+			verdict = "FAILED";
+		}
+
+		cerr << verdict;
+		if (!info.empty()) {
+			cerr << " (";
+			for (int i=0; i<(int)info.size(); ++i) {
+				if (i > 0) cerr << ", ";
+				cerr << info[i];
+			}
+			cerr << ")";
+		}
+		cerr << endl;
+
+		if (verdict == "FAILED") {
+			cerr << "    Expected: \"" << expected << "\"" << endl;
+			cerr << "    Received: \"" << received << "\"" << endl;
+		}
+
+		return verdict == "PASSED";
+	}
+
+	int run_test_case(int casenum) {
+		switch (casenum) {
+		case 0: {
+			string guesses[]          = {"1234", "4321", "1111", "2222", "3333", "4444", "5555", "6666", "7777", "8888", "9999"};
+			int bulls[]               = {2, 1, 1, 0, 2, 0, 0, 0, 1, 0, 0};
+			string expected__         = "1337";
+
+			clock_t start__           = clock();
+			string received__         = EllysBulls().getNumber(vector <string>(guesses, guesses + (sizeof guesses / sizeof guesses[0])), vector <int>(bulls, bulls + (sizeof bulls / sizeof bulls[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+		case 1: {
+			string guesses[]          = {"0000", "1111", "2222"};
+			int bulls[]               = {2, 2, 2};
+			string expected__         = "Liar";
+
+			clock_t start__           = clock();
+			string received__         = EllysBulls().getNumber(vector <string>(guesses, guesses + (sizeof guesses / sizeof guesses[0])), vector <int>(bulls, bulls + (sizeof bulls / sizeof bulls[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+		case 2: {
+			string guesses[]          = {"666666", "666677", "777777", "999999"};
+			int bulls[]               = {2, 3, 1, 0};
+			string expected__         = "Ambiguity";
+
+			clock_t start__           = clock();
+			string received__         = EllysBulls().getNumber(vector <string>(guesses, guesses + (sizeof guesses / sizeof guesses[0])), vector <int>(bulls, bulls + (sizeof bulls / sizeof bulls[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+		case 3: {
+			string guesses[]          = {"000", "987", "654", "321", "100", "010"};
+			int bulls[]               = {2, 1, 0, 0, 1, 1};
+			string expected__         = "007";
+
+			clock_t start__           = clock();
+			string received__         = EllysBulls().getNumber(vector <string>(guesses, guesses + (sizeof guesses / sizeof guesses[0])), vector <int>(bulls, bulls + (sizeof bulls / sizeof bulls[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+		case 4: {
+			string guesses[]          = {"28", "92", "70", "30", "67", "63", "06", "65",
+ "11", "06", "88", "48", "09", "65", "48", "08"};
+			int bulls[]               = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			string expected__         = "54";
+
+			clock_t start__           = clock();
+			string received__         = EllysBulls().getNumber(vector <string>(guesses, guesses + (sizeof guesses / sizeof guesses[0])), vector <int>(bulls, bulls + (sizeof bulls / sizeof bulls[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+		case 5: {
+			string guesses[]          = {"0294884", "1711527", "2362216", "7666148", "7295642",
+ "4166623", "1166638", "2767693", "8650248", "2486509",
+ "6138934", "4018642", "6236742", "2961643", "8407361",
+ "2097376", "6575410", "6071777", "3569948", "2606380"};
+			int bulls[]               = {1, 0, 1, 3, 4, 4, 3, 2, 1, 1, 0, 4, 4, 3, 0, 0, 0, 0, 2, 1};
+			string expected__         = "4266642";
+
+			clock_t start__           = clock();
+			string received__         = EllysBulls().getNumber(vector <string>(guesses, guesses + (sizeof guesses / sizeof guesses[0])), vector <int>(bulls, bulls + (sizeof bulls / sizeof bulls[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}
+
+		// custom cases
+
+/*      case 6: {
+			string guesses[]          = ;
+			int bulls[]               = ;
+			string expected__         = ;
+
+			clock_t start__           = clock();
+			string received__         = EllysBulls().getNumber(vector <string>(guesses, guesses + (sizeof guesses / sizeof guesses[0])), vector <int>(bulls, bulls + (sizeof bulls / sizeof bulls[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}*/
+/*      case 7: {
+			string guesses[]          = ;
+			int bulls[]               = ;
+			string expected__         = ;
+
+			clock_t start__           = clock();
+			string received__         = EllysBulls().getNumber(vector <string>(guesses, guesses + (sizeof guesses / sizeof guesses[0])), vector <int>(bulls, bulls + (sizeof bulls / sizeof bulls[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}*/
+/*      case 8: {
+			string guesses[]          = ;
+			int bulls[]               = ;
+			string expected__         = ;
+
+			clock_t start__           = clock();
+			string received__         = EllysBulls().getNumber(vector <string>(guesses, guesses + (sizeof guesses / sizeof guesses[0])), vector <int>(bulls, bulls + (sizeof bulls / sizeof bulls[0])));
+			return verify_case(casenum, expected__, received__, clock()-start__);
+		}*/
+		default:
+			return -1;
+		}
+	}
 }
 
-int main(){
-
-#ifndef ONLINE_JUDGE
-    freopen("in.txt", "r", stdin);
-    //freopen("out.txt", "w", stdout);
-#endif
-
-    init(); OT(Dinitz());
+int main(int argc, char *argv[]) {
+	if (argc == 1) {
+		moj_harness::run_test();
+	} else {
+		for (int i=1; i<argc; ++i)
+			moj_harness::run_test(atoi(argv[i]));
+	}
 }
-
+// END CUT HERE
